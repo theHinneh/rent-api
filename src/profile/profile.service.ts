@@ -30,9 +30,9 @@ export class ProfileService {
     return found;
   }
 
-  getAllRents() {
-    return this.profileRepo.getAllRents();
-  }
+  // getAllRents() {
+  //   return this.profileRepo.getAllRents();
+  // }
 
   async updateRent(
     id: number,
