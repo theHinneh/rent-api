@@ -18,14 +18,14 @@ export class ProfileController {
   }
 
   @Get()
-  ownerGetRent(@GetUser() user: User) {
+  getRent(@GetUser() user: User) {
     return this.profileService.getRent(user);
   }
 
-  @Get()
-  getAllRents() {
-    return this.profileService.getAllRents();
-  }
+  // @Get()
+  // getAllRents() {
+  //   return this.profileService.getAllRents();
+  // }
 
   @Patch('/:id')
   updateRent(
