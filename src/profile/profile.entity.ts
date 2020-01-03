@@ -30,7 +30,7 @@ export class Profile extends BaseEntity {
   @Column()
   additionalInfo: string;
 
-  @Column('blob')
+  @Column('bytea')
   images;
 
   @ManyToOne(
