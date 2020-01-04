@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/jwt/get-user.decorator';
 import { User } from '../auth/auth.entity';
 import { ProfileUpdate } from './profile-update.dto';
 import { ProfileDto } from './profile.dto';
 import { ProfileService } from './profile.service';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('profile')
 @UseGuards(AuthGuard())
@@ -13,7 +13,8 @@ export class ProfileController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  createRent(@GetUser() user: User, profileDto: ProfileDto) {
+  createRent(@GetUser() user: User, @Body() profileDto: ProfileDto) {
+    // console.log(profileDto);
     return this.profileService.createRent(user, profileDto);
   }
 
