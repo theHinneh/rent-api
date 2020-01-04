@@ -10,6 +10,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   // port: 3306,
   // entities: [User, Profile],
   // database: 'rent-api',
+  // synchronize: true,
 
   entities: [User, Profile],
   type: 'postgres',

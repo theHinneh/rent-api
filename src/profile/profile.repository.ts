@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../auth/auth.entity';
 import { ProfileDto } from './profile.dto';
 import { Profile } from './profile.entity';
+import { BadRequestException } from '@nestjs/common';
 
 @EntityRepository(Profile)
 export class ProfileRepo extends Repository<Profile> {
@@ -18,9 +19,13 @@ export class ProfileRepo extends Repository<Profile> {
     rent.images = profileDto.images;
     rent.owner = user;
 
-    await rent.save();
-    delete rent.owner;
-    return rent;
+    try {
+      await rent.save();
+      delete rent.owner;
+      return rent;
+    } catch (err) {
+      throw new BadRequestException(err.message);
+    }
   }
 
   async ownnerGetRents(user: User) {
