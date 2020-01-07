@@ -40,15 +40,15 @@ export class ProfileService {
     user: User,
   ): Promise<Profile> {
     const input = await this.getRentById(id, user);
-    update.additionalInfo = input.additionalInfo;
-    update.areaName = input.areaName;
-    update.category = input.category;
-    update.city = input.city;
-    update.images = input.images;
-    update.landmark = input.landmark;
-    update.numBedrooms = input.numBedrooms;
-    update.phone = input.phone;
-    update.region = input.region;
+    input.additionalInfo = update.additionalInfo;
+    input.areaName = update.areaName;
+    input.category = update.category;
+    input.city = update.city;
+    input.images = update.images;
+    input.landmark = update.landmark;
+    input.numBedrooms = update.numBedrooms;
+    input.phone = update.phone;
+    input.region = update.region;
 
     await input.save();
     return input;
