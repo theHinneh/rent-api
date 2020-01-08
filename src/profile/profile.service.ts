@@ -12,8 +12,8 @@ export class ProfileService {
     @InjectRepository(ProfileRepo) private readonly profileRepo: ProfileRepo,
   ) {}
 
-  createRent(user: User, profileDto: ProfileDto) {
-    return this.profileRepo.createRent(profileDto, user);
+  createRent(user: User, profileDto: ProfileDto, link: string) {
+    return this.profileRepo.createRent(profileDto, user, link);
   }
 
   getRent(user: User) {
@@ -44,7 +44,7 @@ export class ProfileService {
     input.areaName = update.areaName;
     input.category = update.category;
     input.city = update.city;
-    input.images = update.images;
+    // input.images = update.images;
     input.landmark = update.landmark;
     input.numBedrooms = update.numBedrooms;
     input.phone = update.phone;

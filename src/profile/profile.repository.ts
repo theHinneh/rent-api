@@ -1,12 +1,12 @@
+import { BadRequestException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../auth/auth.entity';
 import { ProfileDto } from './profile.dto';
 import { Profile } from './profile.entity';
-import { BadRequestException } from '@nestjs/common';
 
 @EntityRepository(Profile)
 export class ProfileRepo extends Repository<Profile> {
-  async createRent(profileDto: ProfileDto, user: User) {
+  async createRent(profileDto: ProfileDto, user: User, link: string) {
     const rent = new Profile();
     rent.additionalInfo = profileDto.additionalInfo;
     rent.areaName = profileDto.areaName;
@@ -16,7 +16,7 @@ export class ProfileRepo extends Repository<Profile> {
     rent.numBedrooms = profileDto.numBedrooms;
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
-    rent.images = profileDto.images;
+    rent.images = link;
     rent.owner = user;
 
     try {
