@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from '../config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
+// tslint:disable-next-line: no-var-requires
 const MulterGoogleCloudStorage = require('multer-google-storage');
 
 @Module({
@@ -13,11 +14,6 @@ const MulterGoogleCloudStorage = require('multer-google-storage');
     ProfileModule,
     MulterModule.register({
       storage: MulterGoogleCloudStorage.storageEngine(),
-      // storage: MulterGoogleCloudStorage({
-      //   GCS_BUCKET: 'rent-api',
-      //   GCLOUD_PROJECT: 'fine-century-264510',
-      //   GCS_KEYFILE: '../fine-century-264510-00501e3d618e.json',
-      // }),
     }),
   ],
   controllers: [],

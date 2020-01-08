@@ -6,6 +6,7 @@ import { User } from '../auth/auth.entity';
 import { ProfileUpdate } from './profile-update.dto';
 import { ProfileDto } from './profile.dto';
 import { ProfileService } from './profile.service';
+// tslint:disable-next-line: no-var-requires
 const MulterGoogleCloudStorage = require('multer-google-storage');
 
 @Controller('profile')

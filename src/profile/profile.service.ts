@@ -44,7 +44,7 @@ export class ProfileService {
     input.areaName = update.areaName;
     input.category = update.category;
     input.city = update.city;
-    // input.images = update.images;
+    input.images = update.images;
     input.landmark = update.landmark;
     input.numBedrooms = update.numBedrooms;
     input.phone = update.phone;
