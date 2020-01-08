@@ -12,8 +12,8 @@ export class ProfileService {
     @InjectRepository(ProfileRepo) private readonly profileRepo: ProfileRepo,
   ) {}
 
-  createRent(user: User, profileDto: ProfileDto) {
-    return this.profileRepo.createRent(profileDto, user);
+  createRent(user: User, profileDto: ProfileDto, link: string) {
+    return this.profileRepo.createRent(profileDto, user, link);
   }
 
   getRent(user: User) {
