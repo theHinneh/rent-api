@@ -17,7 +17,7 @@ export class ProfileRepo extends Repository<Profile> {
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
     rent.images = await link.path;
-    console.log(rent.images);
+    // console.log(rent.images);
     rent.owner = user;
 
     try {

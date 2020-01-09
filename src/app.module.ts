@@ -12,8 +12,10 @@ const MulterGoogleCloudStorage = require('multer-google-storage');
     TypeOrmModule.forRoot(typeOrmConfig),
     AuthModule,
     ProfileModule,
-    MulterModule.register({
-      storage: MulterGoogleCloudStorage.storageEngine(),
+    MulterModule.registerAsync({
+      useFactory: () => ({
+        storage: MulterGoogleCloudStorage.storageEngine(),
+      }),
     }),
   ],
   controllers: [],

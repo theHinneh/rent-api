@@ -21,12 +21,12 @@ export class ProfileController {
     }),
   )
   @UsePipes(ValidationPipe)
-  createRent(
+  async createRent(
     @GetUser() user: User,
     @Body() profileDto: ProfileDto,
     @UploadedFile() images: any,
   ) {
-    return this.profileService.createRent(user, profileDto, images);
+    return this.profileService.createRent(user, profileDto, await images);
   }
 
   @Get()
