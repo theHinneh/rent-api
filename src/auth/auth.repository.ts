@@ -6,7 +6,7 @@ import { User } from './auth.entity';
 
 @EntityRepository(User)
 export class UserRepo extends Repository<User> {
-  async signUp(userDto: UserDto): Promise<string> {
+  async signUp(userDto: UserDto): Promise<User> {
     const { username, password } = userDto;
 
     const user = new User();
@@ -18,7 +18,8 @@ export class UserRepo extends Repository<User> {
       await user.save();
       delete user.password;
       delete user.salt;
-      return user.username;
+      delete user.id;
+      return user;
     } catch (err) {
       if (err.code === '23505' || 'ER_DUP_ENTRY') {
         throw new ConflictException('Username already exists');
