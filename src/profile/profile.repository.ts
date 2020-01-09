@@ -7,9 +7,6 @@ import { Profile } from './profile.entity';
 @EntityRepository(Profile)
 export class ProfileRepo extends Repository<Profile> {
   async createRent(profileDto: ProfileDto, user: User, link: any) {
-
-    const imagePath = link;
-
     const rent = new Profile();
     rent.additionalInfo = profileDto.additionalInfo;
     rent.areaName = profileDto.areaName;
@@ -19,8 +16,8 @@ export class ProfileRepo extends Repository<Profile> {
     rent.numBedrooms = profileDto.numBedrooms;
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
-    rent.images = imagePath.path;
-    // console.log(imagePath)
+    rent.images = await link.path;
+    console.log(rent.images);
     rent.owner = user;
 
     try {
