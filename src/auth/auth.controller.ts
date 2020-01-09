@@ -8,7 +8,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/signup')
-  signUp(@Body(ValidationPipe) userDto: UserDto): Promise<User> {
+  signUp(@Body(ValidationPipe) userDto: UserDto): Promise<string> {
     return this.authService.signUp(userDto);
   }
 
