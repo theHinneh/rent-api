@@ -10,5 +10,4 @@ export class ProfileDto {
   phone: number;
   landmark: string;
   additionalInfo: string;
-  images: any;
 }
