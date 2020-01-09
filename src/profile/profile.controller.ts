@@ -24,9 +24,9 @@ export class ProfileController {
   createRent(
     @GetUser() user: User,
     @Body() profileDto: ProfileDto,
-    @UploadedFile() images,
+    @UploadedFile() images: any,
   ) {
-    return this.profileService.createRent(user, profileDto, images.path);
+    return this.profileService.createRent(user, profileDto, images);
   }
 
   @Get()
