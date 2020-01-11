@@ -17,7 +17,7 @@ export class ProfileRepo extends Repository<Profile> {
       console.log(imageLink);
     } catch (err) {
       rent.images = ' ';
-      console.log(imageLink)
+      console.log(imageLink);
       throw new BadRequestException(err.message);
     }
 
@@ -29,6 +29,8 @@ export class ProfileRepo extends Repository<Profile> {
     rent.numBedrooms = profileDto.numBedrooms;
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
+
+    console.log(rent);
     rent.owner = user;
 
     try {
