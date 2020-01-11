@@ -8,8 +8,16 @@ import { Profile } from './profile.entity';
 @EntityRepository(Profile)
 export class ProfileRepo extends Repository<Profile> {
   async createRent(profileDto: ProfileDto, user: User, link: any) {
-    const imageLink: GCSDto = await link;
     const rent = new Profile();
+
+    let imageLink: GCSDto;
+    try {
+      imageLink = await link;
+    } catch (err) {
+      imageLink.path = '';
+      throw new BadRequestException(err.message);
+    }
+
     rent.additionalInfo = profileDto.additionalInfo;
     rent.areaName = profileDto.areaName;
     rent.category = profileDto.category;
@@ -18,12 +26,7 @@ export class ProfileRepo extends Repository<Profile> {
     rent.numBedrooms = profileDto.numBedrooms;
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
-    try {
-      rent.images = await imageLink.path;
-    } catch (err) {
-      rent.images = ' ';
-    }
-    // console.log(imageLink);
+    rent.images = imageLink.path;
     rent.owner = user;
 
     try {
