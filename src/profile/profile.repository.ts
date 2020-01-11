@@ -13,8 +13,10 @@ export class ProfileRepo extends Repository<Profile> {
     let imageLink: GCSDto;
     try {
       imageLink = await link;
+      rent.images = imageLink.path;
     } catch (err) {
       imageLink.path = '';
+      rent.images = imageLink.path;
       throw new BadRequestException(err.message);
     }
 
@@ -26,7 +28,6 @@ export class ProfileRepo extends Repository<Profile> {
     rent.numBedrooms = profileDto.numBedrooms;
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
-    rent.images = imageLink.path;
     rent.owner = user;
 
     try {
