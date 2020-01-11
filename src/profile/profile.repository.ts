@@ -17,6 +17,7 @@ export class ProfileRepo extends Repository<Profile> {
       console.log(imageLink);
     } catch (err) {
       rent.images = ' ';
+      console.log(imageLink)
       throw new BadRequestException(err.message);
     }
 
