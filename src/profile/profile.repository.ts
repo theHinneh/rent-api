@@ -15,8 +15,7 @@ export class ProfileRepo extends Repository<Profile> {
       imageLink = await link;
       rent.images = imageLink.path;
     } catch (err) {
-      imageLink.path = '';
-      rent.images = imageLink.path;
+      rent.images = ' ';
       throw new BadRequestException(err.message);
     }
 
