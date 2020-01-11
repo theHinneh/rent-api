@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../auth/auth.entity';
+import { GCSDto } from './gcs.dto';
 import { ProfileUpdate } from './profile-update.dto';
 import { ProfileDto } from './profile.dto';
 import { Profile } from './profile.entity';
@@ -12,7 +13,7 @@ export class ProfileService {
     @InjectRepository(ProfileRepo) private readonly profileRepo: ProfileRepo,
   ) {}
 
-  async createRent(user: User, profileDto: ProfileDto, link: any) {
+  async createRent(user: User, profileDto: ProfileDto, link: GCSDto) {
     return this.profileRepo.createRent(profileDto, user, await link);
   }
 

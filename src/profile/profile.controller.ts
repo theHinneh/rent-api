@@ -6,6 +6,7 @@ import { User } from '../auth/auth.entity';
 import { ProfileUpdate } from './profile-update.dto';
 import { ProfileDto } from './profile.dto';
 import { ProfileService } from './profile.service';
+import { GCSDto } from './gcs.dto';
 // tslint:disable-next-line: no-var-requires
 const MulterGoogleCloudStorage = require('multer-google-storage');
 
@@ -24,7 +25,7 @@ export class ProfileController {
   async createRent(
     @GetUser() user: User,
     @Body() profileDto: ProfileDto,
-    @UploadedFile() images: any,
+    @UploadedFile() images: GCSDto,
   ) {
     return this.profileService.createRent(user, profileDto, await images);
   }
