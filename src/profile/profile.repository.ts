@@ -18,9 +18,13 @@ export class ProfileRepo extends Repository<Profile> {
     rent.numBedrooms = profileDto.numBedrooms;
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
-    rent.images = imageLink.path;
+    try {
+      rent.images = await imageLink.path;
+    } catch (err) {
+      rent.images = ' ';
+    }
 
-    console.log(imageLink);
+    // console.log(imageLink);
     rent.owner = user;
 
     try {
