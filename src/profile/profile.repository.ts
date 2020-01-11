@@ -23,7 +23,6 @@ export class ProfileRepo extends Repository<Profile> {
     } catch (err) {
       rent.images = ' ';
     }
-
     // console.log(imageLink);
     rent.owner = user;
 
