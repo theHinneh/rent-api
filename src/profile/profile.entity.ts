@@ -36,7 +36,7 @@ export class Profile extends BaseEntity {
   @Column()
   additionalInfo: string;
 
-  @Column()
+  @Column('json')
   images: string;
 
   @ManyToOne(
