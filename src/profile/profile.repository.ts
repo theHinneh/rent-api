@@ -10,6 +10,7 @@ export class ProfileRepo extends Repository<Profile> {
   async createRent(profileDto: ProfileDto, user: User, link: any) {
     const imageLink: GCSDto = await link;
     const rent = new Profile();
+
     rent.additionalInfo = profileDto.additionalInfo;
     rent.areaName = profileDto.areaName;
     rent.category = profileDto.category;
@@ -19,9 +20,9 @@ export class ProfileRepo extends Repository<Profile> {
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
     try {
-      rent.images = await imageLink.path;
+      rent.images = imageLink.path;
     } catch (err) {
-      rent.images = ' ';
+      rent.images = '';
       // throw new BadRequestException(err.message);
     }
     // console.log(imageLink);

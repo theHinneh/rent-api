@@ -26,8 +26,8 @@ let ProfileController = class ProfileController {
     constructor(profileService) {
         this.profileService = profileService;
     }
-    async createRent(user, profileDto, images) {
-        return this.profileService.createRent(user, profileDto, await images);
+    createRent(user, profileDto, images) {
+        return this.profileService.createRent(user, profileDto, images);
     }
     getRent(user) {
         return this.profileService.getRent(user);
@@ -52,7 +52,7 @@ __decorate([
     __metadata("design:paramtypes", [auth_entity_1.User,
         profile_dto_1.ProfileDto,
         gcs_dto_1.GCSDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProfileController.prototype, "createRent", null);
 __decorate([
     common_1.Get(),

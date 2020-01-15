@@ -1,5 +1,12 @@
 import * as bcrypt from 'bcrypt';
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 import { Profile } from '../profile/profile.entity';
 
 @Entity()

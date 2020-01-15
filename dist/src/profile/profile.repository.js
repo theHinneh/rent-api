@@ -22,10 +22,10 @@ let ProfileRepo = class ProfileRepo extends typeorm_1.Repository {
         rent.phone = profileDto.phone;
         rent.region = profileDto.region;
         try {
-            rent.images = await imageLink.path;
+            rent.images = imageLink.path;
         }
         catch (err) {
-            rent.images = ' ';
+            rent.images = '';
         }
         rent.owner = user;
         try {

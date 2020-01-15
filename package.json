@@ -1,9 +1,8 @@
 {
   "name": "rent-api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "node": "10.18.0",
-    "yarn": "1.21.1",
     "npm": "6.13.4"
   },
   "description": "",

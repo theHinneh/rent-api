@@ -1,4 +1,18 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GetUser } from 'src/auth/jwt/get-user.decorator';
@@ -22,12 +36,12 @@ export class ProfileController {
     }),
   )
   @UsePipes(ValidationPipe)
-  async createRent(
+  createRent(
     @GetUser() user: User,
     @Body() profileDto: ProfileDto,
     @UploadedFile() images: GCSDto,
   ) {
-    return this.profileService.createRent(user, profileDto, await images);
+    return this.profileService.createRent(user, profileDto, images);
   }
 
   @Get()
