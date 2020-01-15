@@ -7,20 +7,20 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { GetUser } from 'src/auth/jwt/get-user.decorator';
 import { User } from '../auth/auth.entity';
+import { GCSDto } from './gcs.dto';
 import { ProfileUpdate } from './profile-update.dto';
 import { ProfileDto } from './profile.dto';
 import { ProfileService } from './profile.service';
-import { GCSDto } from './gcs.dto';
 // tslint:disable-next-line: no-var-requires
 const MulterGoogleCloudStorage = require('multer-google-storage');
 
@@ -31,17 +31,17 @@ export class ProfileController {
 
   @Post()
   @UseInterceptors(
-    FileInterceptor('images', {
+    FilesInterceptor('images', 3, {
       storage: new MulterGoogleCloudStorage.storageEngine(),
     }),
   )
   @UsePipes(ValidationPipe)
-  createRent(
+  async createRent(
     @GetUser() user: User,
     @Body() profileDto: ProfileDto,
-    @UploadedFile() images: GCSDto,
+    @UploadedFiles() images: GCSDto,
   ) {
-    return this.profileService.createRent(user, profileDto, images);
+    return this.profileService.createRent(user, profileDto, await images);
   }
 
   @Get()
