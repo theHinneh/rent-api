@@ -23,9 +23,8 @@ export class ProfileRepo extends Repository<Profile> {
       rent.images = imageLink.path;
     } catch (err) {
       rent.images = '';
-      // throw new BadRequestException(err.message);
+      throw new BadRequestException(err.message);
     }
-    // console.log(imageLink);
     rent.owner = user;
 
     try {
