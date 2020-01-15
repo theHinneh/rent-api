@@ -16,5 +16,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'postgres',
   synchronize: true,
   url:
-    'postgres://tgqbtuzbvxizos:69839986ba009e31769a2893178d3023408ba8302c8b234f61fb63296b20eebe@ec2-174-129-32-212.compute-1.amazonaws.com:5432/d9ppjjoqfqli9e',
+    'postgres://ynyldrcrlzxcle:5a755859bc55a566cc5ead2aabfbe8cd7fafa43b6d5ec7c613f902fa82ef6e19@ec2-3-214-53-225.compute-1.amazonaws.com:5432/d3hkvirc566s8q',
 };
