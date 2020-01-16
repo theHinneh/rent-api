@@ -1,11 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../auth/auth.entity';
 import { GCSDto } from './gcs.dto';
-import { ProfileUpdate } from './profile-update.dto';
 import { ProfileDto } from './profile.dto';
 import { Profile } from './profile.entity';
 import { ProfileRepo } from './profile.repository';
+import { Storage } from '@google-cloud/storage';
 
 @Injectable()
 export class ProfileService {
@@ -13,8 +17,8 @@ export class ProfileService {
     @InjectRepository(ProfileRepo) private readonly profileRepo: ProfileRepo,
   ) {}
 
-  async createRent(user: User, profileDto: ProfileDto, link: GCSDto) {
-    return this.profileRepo.createRent(profileDto, user, await link);
+  async createRent(user: User, profileDto: ProfileDto, images: GCSDto) {
+    return this.profileRepo.createRent(profileDto, user, await images);
   }
 
   getRent(user: User) {
@@ -31,28 +35,54 @@ export class ProfileService {
     return found;
   }
 
-  // getAllRents() {
-  //   return this.profileRepo.getAllRents();
-  // }
-
   async updateRent(
     id: number,
-    update: ProfileUpdate,
+    update: ProfileDto,
+    images: GCSDto,
     user: User,
   ): Promise<Profile> {
-    const input = await this.getRentById(id, user);
-    input.additionalInfo = update.additionalInfo;
-    input.areaName = update.areaName;
-    input.category = update.category;
-    input.city = update.city;
-    input.images = update.images;
-    input.landmark = update.landmark;
-    input.numBedrooms = update.numBedrooms;
-    input.phone = update.phone;
-    input.region = update.region;
+    const rent = await this.getRentById(id, user);
+    const imageLinks: any = await images;
 
-    await input.save();
-    return input;
+    const storage = new Storage({
+      keyFilename: process.env.GCS_KEYFILE,
+    });
+
+    const oldImagePaths = [];
+    const newImagePaths = [];
+
+    imageLinks.filter(p => {
+      newImagePaths.push(p.filename);
+    });
+    rent.images.filter(p => {
+      oldImagePaths.push(p.filename);
+    });
+
+    oldImagePaths.forEach(async p => {
+      if (newImagePaths.indexOf(p) === -1) {
+        await storage
+          .bucket(process.env.GCS_BUCKET)
+          .file(p)
+          .delete();
+      }
+    });
+
+    rent.additionalInfo = update.additionalInfo;
+    rent.areaName = update.areaName;
+    rent.category = update.category;
+    rent.city = update.city;
+    rent.landmark = update.landmark;
+    rent.numBedrooms = update.numBedrooms;
+    rent.phone = update.phone;
+    rent.region = update.region;
+
+    try {
+      rent.images = await imageLinks;
+      await rent.save();
+      return rent;
+    } catch (err) {
+      throw new BadRequestException(err.message);
+    }
   }
 
   async deleteRent(id: number, user: User) {

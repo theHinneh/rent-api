@@ -18,7 +18,6 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { GetUser } from 'src/auth/jwt/get-user.decorator';
 import { User } from '../auth/auth.entity';
 import { GCSDto } from './gcs.dto';
-import { ProfileUpdate } from './profile-update.dto';
 import { ProfileDto } from './profile.dto';
 import { ProfileService } from './profile.service';
 // tslint:disable-next-line: no-var-requires
@@ -55,12 +54,18 @@ export class ProfileController {
   // }
 
   @Patch('/:id')
-  updateRent(
+  @UseInterceptors(
+    FilesInterceptor('images', 3, {
+      storage: new MulterGoogleCloudStorage.storageEngine(),
+    }),
+  )
+  async updateRent(
     @Param('id', ParseIntPipe) id: number,
-    @Body() update: ProfileUpdate,
+    @Body() update: ProfileDto,
+    @UploadedFiles() images: GCSDto,
     @GetUser() user: User,
   ) {
-    return this.profileService.updateRent(id, update, user);
+    return this.profileService.updateRent(id, update, await images, user);
   }
 
   @Delete('/:id')

@@ -1,14 +1,13 @@
 import { BadRequestException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../auth/auth.entity';
-import { GCSDto } from './gcs.dto';
 import { ProfileDto } from './profile.dto';
 import { Profile } from './profile.entity';
 
 @EntityRepository(Profile)
 export class ProfileRepo extends Repository<Profile> {
-  async createRent(profileDto: ProfileDto, user: User, link: any) {
-    const imageLink: any = await link;
+  async createRent(profileDto: ProfileDto, user: User, images: any) {
+    const imageLink: any = await images;
     const rent = new Profile();
 
     rent.additionalInfo = profileDto.additionalInfo;
@@ -19,14 +18,10 @@ export class ProfileRepo extends Repository<Profile> {
     rent.numBedrooms = profileDto.numBedrooms;
     rent.phone = profileDto.phone;
     rent.region = profileDto.region;
-    try {
-      rent.images = await imageLink;
-    } catch (err) {
-      throw new BadRequestException(err.message);
-    }
     rent.owner = user;
 
     try {
+      rent.images = await imageLink;
       await rent.save();
       delete rent.owner;
       return rent;
