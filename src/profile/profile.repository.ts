@@ -37,9 +37,9 @@ export class ProfileRepo extends Repository<Profile> {
     return rents;
   }
 
-  async getAllRents() {
-    const query = this.createQueryBuilder('rents');
-    const rents = await query.getMany();
-    return rents;
-  }
+  // async getAllRents() {
+  //   const query = this.createQueryBuilder('rents');
+  //   const rents = await query.getMany();
+  //   return rents;
+  // }
 }

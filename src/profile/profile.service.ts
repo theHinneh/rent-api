@@ -91,4 +91,8 @@ export class ProfileService {
       throw new NotFoundException(`Reminder with ID "${id}" not found`);
     }
   }
+
+  // customersGetRent() {
+  //   return this.profileRepo.getAllRents();
+  // }
 }
