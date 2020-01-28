@@ -1,3 +1,4 @@
+import { Storage } from '@google-cloud/storage';
 import {
   BadRequestException,
   Injectable,
@@ -9,7 +10,6 @@ import { GCSDto } from './gcs.dto';
 import { ProfileDto } from './profile.dto';
 import { Profile } from './profile.entity';
 import { ProfileRepo } from './profile.repository';
-import { Storage } from '@google-cloud/storage';
 
 @Injectable()
 export class ProfileService {
@@ -52,18 +52,19 @@ export class ProfileService {
     const newImagePaths = [];
 
     imageLinks.filter(p => {
-      newImagePaths.push(p.filename);
+      newImagePaths.push(p);
     });
     rent.images.filter(p => {
-      oldImagePaths.push(p.filename);
+      oldImagePaths.push(p);
     });
 
-    oldImagePaths.forEach(async p => {
-      if (newImagePaths.indexOf(p) === -1) {
+    newImagePaths.forEach(async p => {
+      if (oldImagePaths.indexOf(p) === -1) {
         await storage
           .bucket(process.env.GCS_BUCKET)
-          .file(p)
-          .delete();
+          .file(p.filename)
+          .delete()
+          .catch(err => console.log(err.message));
       }
     });
 
@@ -77,7 +78,10 @@ export class ProfileService {
     rent.region = update.region;
 
     try {
-      rent.images = await imageLinks;
+      newImagePaths.length === 0
+        ? (rent.images = oldImagePaths)
+        : (rent.images = newImagePaths);
+
       await rent.save();
       return rent;
     } catch (err) {
