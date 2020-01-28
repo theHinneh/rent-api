@@ -12,6 +12,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: 'rent-api',
   synchronize: true,
 
+
   // entities: [User, Profile],
   // type: 'postgres',
   // synchronize: true,
